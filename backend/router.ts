@@ -1,40 +1,51 @@
 import { MouseActions } from './mouseActions.js';
+import { DrawActions } from './drawActions.js';
 
 const mouseActions = new MouseActions();
+const drawActions = new DrawActions();
 
 export async function router(command: string) {
-  if (command.startsWith('mouse')) {
-    const [action, value] = command.split(' ');
+  const [action, value, height] = command.split(' ');
+  let result;
 
-    let result; 
+  if (action.startsWith('mouse')) {
     switch (action) {
     case 'mouse_up':
-      await mouseActions.up(+value);
+      mouseActions.up(+value);
       break;
     case 'mouse_down':
-      await mouseActions.down(+value);
+      mouseActions.down(+value);
       break;
     case 'mouse_left':
-      await mouseActions.left(+value);
+      mouseActions.left(+value);
       break;
     case 'mouse_right':
-      await mouseActions.right(+value);
+      mouseActions.right(+value);
       break;
     case 'mouse_position':
       const position = await mouseActions.getPosition();
-      result = `mouse_position ${position.x},${position.y}`
+      result = `mouse_position ${position.x},${position.y}`;
       break;
     }
-
-    return result ?? action;
   }
  
-  if (command.startsWith('draw')) {
-    return 'draw';
-  }
-  if (command.startsWith('prnt')) {
-    return 'prnt';
+  if (action.startsWith('draw')) {
+    switch(action) {
+    case 'draw_circle':
+      drawActions.circle(+value);
+      break;
+    case 'draw_rectangle':
+      drawActions.rectangle(+value, +height);
+      break;
+    case 'draw_square':
+      drawActions.square(+value);
+      break;
+    }
   }
 
-  return 'error';
+  if (action.startsWith('prnt')) {
+    result = 'prnt';
+  }
+
+  return result ?? action;
 }

@@ -8,9 +8,11 @@ export class MouseActions {
   async down(num: number) {
     await mouse.move(down(num));
   }
+
   async left(num: number) {
     await mouse.move(left(num));
   }
+
   async right(num: number) {
     await mouse.move(right(num));
   }

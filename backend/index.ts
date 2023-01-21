@@ -12,6 +12,9 @@ wss.on('connection', (sock, req) => {
   
   sock.on('message', async (data) => {    
     const command = data.toString();
+
+    console.log(command);
+
     const response = await router(command);
     sock.send(response);
   });
