@@ -1,28 +1,40 @@
-import { MouseNavigation } from './navigationActions.js';
+import { MouseActions } from './mouseActions.js';
 
-const mouse = new MouseNavigation();
+const mouseActions = new MouseActions();
 
 export async function router(command: string) {
   if (command.startsWith('mouse')) {
     const [action, value] = command.split(' ');
 
-    if (action === 'mouse_position') {
-      const result = await mouse[action]();
-      console.log(`mouse_position ${result.x},${result.y}`);
-      return `mouse_position ${result.x},${result.y}`;
+    let result; 
+    switch (action) {
+    case 'mouse_up':
+      await mouseActions.up(+value);
+      break;
+    case 'mouse_down':
+      await mouseActions.down(+value);
+      break;
+    case 'mouse_left':
+      await mouseActions.left(+value);
+      break;
+    case 'mouse_right':
+      await mouseActions.right(+value);
+      break;
+    case 'mouse_position':
+      const position = await mouseActions.getPosition();
+      result = `mouse_position ${position.x},${position.y}`
+      break;
     }
 
-    // @ts-ignore
-    mouse[action](+value);
-    return null;
-  }    
-  
+    return result ?? action;
+  }
+ 
   if (command.startsWith('draw')) {
     return 'draw';
   }
   if (command.startsWith('prnt')) {
-    return 'draw';
+    return 'prnt';
   }
 
-  return null;
+  return 'error';
 }

@@ -10,19 +10,10 @@ wss.on('open', () => {
 wss.on('connection', (sock, req) => {
   console.log('connected!');
   
-  sock.on('message', async (data) => {
-    console.log('message received');
-
+  sock.on('message', async (data) => {    
     const command = data.toString();
-    console.log(command);
-    const result = await router(command);
-
-    if (result) {
-      console.log(result);
-      sock.send(result.toString());
-    }
-
-    sock.send(command);
+    const response = await router(command);
+    sock.send(response);
   });
 
   sock.on('error', () => {
