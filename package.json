@@ -7,7 +7,7 @@
     "scripts": {
         "start": "node ./index.js",
         "start:dev": "nodemon ./index.js",
-        "start:back": "nodemon --exec ts-node ./backend/index.ts --project ./tsconfig.json",
+        "start:back": "nodemon --exec ts-node --experimental-specifier-resolution=node ./backend/index.ts --project ./tsconfig.json",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Andrei Auchynnikau",
@@ -15,6 +15,7 @@
     "license": "ISC",
     "devDependencies": {
         "@types/node": "^18.11.18",
+        "@types/ws": "^8.5.4",
         "@typescript-eslint/eslint-plugin": "^5.48.2",
         "@typescript-eslint/parser": "^5.48.2",
         "eslint": "^8.32.0",
