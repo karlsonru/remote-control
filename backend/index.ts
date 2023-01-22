@@ -11,13 +11,20 @@ wss.on('connection', (sock, req) => {
     decodeStrings: false,
   });
   
-  stream.on('data', async (data) => {    
+  stream.on('data', async (data) => {
     stream.write(await router(data));
   });
 
-  stream.on('error', () => {
-    console.error('error occured');
+  stream.on('error', (err) => {
+    console.error('Error occured: ', err);
   });
 
+  stream.on('close', () => {
+    wss.close();
+  });
+
+  wss.on('close', () => {
+    stream.destroy();
+  });
 });
 
