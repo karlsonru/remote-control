@@ -1,11 +1,7 @@
-import WebSocket, { createWebSocketStream, WebSocketServer } from 'ws';
+import { createWebSocketStream, WebSocketServer } from 'ws';
 import { router } from './router.js';
 
 const wss = new WebSocketServer({ port: 8080 });
-
-wss.on('open', () => {
-  console.log('Open!');
-});
 
 wss.on('connection', (sock, req) => {
   console.log('connected!');
@@ -21,7 +17,7 @@ wss.on('connection', (sock, req) => {
 
   stream.on('error', () => {
     console.error('error occured');
-  });    
+  });
 
 });
 

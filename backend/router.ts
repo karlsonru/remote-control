@@ -1,8 +1,10 @@
 import { MouseActions } from './mouseActions.js';
 import { DrawActions } from './drawActions.js';
+import { PrintActions } from './printActions.js';
 
 const mouseActions = new MouseActions();
 const drawActions = new DrawActions();
+const printActions = new PrintActions();
 
 export async function router(command: string) {
   const [action, value, height] = command.split(' ');
@@ -32,7 +34,7 @@ export async function router(command: string) {
   if (action.startsWith('draw')) {
     switch(action) {
     case 'draw_circle':
-      drawActions.circle(+value);
+      await drawActions.circle(+value);
       break;
     case 'draw_rectangle':
       drawActions.rectangle(+value, +height);
@@ -44,7 +46,8 @@ export async function router(command: string) {
   }
 
   if (action.startsWith('prnt')) {
-    result = 'prnt';
+    const image = await printActions.print();
+    result = `prnt_scrn ${image}`;
   }
 
   return result ?? `${action}_${value}`;
