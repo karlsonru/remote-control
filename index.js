@@ -1,3 +1,4 @@
+import './backend_dst/index.js';
 import { httpServer } from './src/http_server/index.js';
 import { mouse } from '@nut-tree/nut-js';
 
