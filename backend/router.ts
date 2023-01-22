@@ -47,5 +47,5 @@ export async function router(command: string) {
     result = 'prnt';
   }
 
-  return result ?? action;
+  return result ?? `${action}_${value}`;
 }
